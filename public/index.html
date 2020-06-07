@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/bcc2a30727.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="login-container">
+        
+        <div class="enter-info">
+            <label for="username">Username</label>
+            <input
+            type="text"
+            name="username"
+            id="username"
+            placeholder="Enter username..."
+            required
+            />
+        </div>
+        <div class="enter-info">
+            <label for="room">Room</label>
+                <select name="room" id="room">
+                    <option value="itzy">Itzy</option>
+                    <option value="blackpink">Blackpink</option>
+                    <option value="twice">Twice</option>
+                    <option value="redvelvet">Red Velvet</option>
+                </select>
+         </div>
+         <button type="submit" id="join-room-btn" class="btn">Join Room</button>
+       
+    </div>
+    <!--gives front_end.js access to socket.io library -->
+    <script src="/socket.io/socket.io.js"></script> 
+    <script src="authenticate.js"></script>
+    
+</body>
+</html>

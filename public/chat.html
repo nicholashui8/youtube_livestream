@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://kit.fontawesome.com/bcc2a30727.js" crossorigin="anonymous"></script>
+
+        <link rel="stylesheet" href="style.css">
+    </head>
+    <body>
+    <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
+        <div id="player"></div>
+        <div class="player-controller">
+            <button type="button" id="previous-button"><i class="fas fa-backward"></i></button>
+            <button type="button" id="play-button"><i class="fas fa-play"></i></button>
+            <button type="button" id="pause-button"><i class="fas fa-pause"></i></button>
+            <button type="button" id="next-button"><i class="fas fa-forward"></i></button>
+            <button type="button" id="start-live-button">Join Live</button>
+        </div>
+        <div class="chat-container">
+            <div class="chat-messages">
+                
+            </div>
+            <div class="chat-box">
+                <form id="chat-form">
+                    <input id="message" type="text" placeholder="Enter Message" required autocomplete="off"/>
+                    <button id="send"><i class="fas fa-arrow-up"></i></button>
+                </form>
+            </div>
+        </div>
+        <!--gives front_end.js access to socket.io library -->
+        <script src="/socket.io/socket.io.js"></script> 
+        <script src="front_end.js"></script>
+  </body>
+</html>
