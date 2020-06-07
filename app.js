@@ -7,7 +7,7 @@ const {userJoin, getCurrentUser, users} = require('./users');
 
 const app = express();
 
-const server = app.listen( 3000 || process.env.PORT, () => {console.log('listening at 3000!');});
+const server = app.listen(process.env.PORT || 3000, () => {console.log('listening at 3000!');});
 //send frontend every file in folder: "public"
 app.use(express.static('public'));
 
