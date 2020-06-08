@@ -28,7 +28,7 @@ io.on('connection', socket => {
         });
         //remove that user from array of users
         if(userToRemove !== -1){
-            users.splice(userToRemove);
+            return users.splice(userToRemove, 1);
         }
         
         
@@ -109,6 +109,7 @@ io.on('connection', socket => {
     socket.on('playVid', () => {
         //tells all other clients to play video
         const user = getCurrentUser(socket.id);
+        console.log('User info' + user);
         socket.broadcast.to(user.room).emit('playVid',)
         //socket.broadcast.emit('playVid', );
     });
@@ -136,6 +137,7 @@ io.on('connection', socket => {
     socket.on('chatMessage', (msg) => {
         console.log('Message recieved: ' + msg);
         const user = getCurrentUser(socket.id);
+        console.log('user room: ' + user.room);
         //send message to all clients in the same room
         io.to(user.room).emit('message', formatMessage(user.username, msg));
     });
