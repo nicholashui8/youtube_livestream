@@ -18,18 +18,53 @@ const io = socketio(server);
 io.on('connection', socket => {
     console.log('new web socket connection');
 
+    socket.on('disconnect', () => {
+        //since client has left, remove their username from array
+        //we have the socketid of client that just left
+        console.log('Has left: ' + socket.id);
+        //get index of user that just left
+        let userToRemove = users.findIndex((user) => {
+            return user.id === socket.id;
+        });
+        //remove that user from array of users
+        if(userToRemove !== -1){
+            users.splice(userToRemove);
+        }
+        
+        
+
+    });
+
+
+
+
     //listens for when user joins a room
     socket.on('joinroom', ({username, room}) => {
         
+       
         //pass user into "userJoin" to add user into array
         const user = userJoin(socket.id, username, room);
+        //puts client into room that they selected
         socket.join(user.room);
+        console.log('Has joined: ' + socket.id);
         //tells all clients in room that a new user has joined
         socket.broadcast.to(user.room).emit('message', formatMessage(user.username, user.username + ' has joined the chat'));
         console.log(user.username + ' has joined ' + user.room);
+        console.log('Length of array: ' + users.length);
         for(let i = 0; i < users.length; i++){
             console.log('UserL ' + i + ' ' + users[i].username);
         }
+         //when user joins room we want to update the live user section
+         //update all other clients of the new client
+         socket.broadcast.to(user.room).emit('updateLiveUsers', users);
+         //output all live users for the new client
+         socket.emit('outputLiveUsers', {users, room});
+
+        
+
+
+
+
     });
 
     socket.on('checkIfDup', (targetUsername) => {

@@ -7,9 +7,10 @@ document.getElementById("join-room-btn").addEventListener("click", () => {
     let r = document.getElementById("room");
     let room = r.options[r.selectedIndex].value;
     console.log('The user entered... ' + targetUsername);
-    //1. get all usernames from server
+    //1. send new username to server to check if it is duplicate
     socket.emit('checkIfDup', targetUsername);
 
+    //if badname is false, then allow user into room, if badname is true, ask user to enter a new username
     socket.on('checkIfDup', (badName) => {
         if(badName === false){
             //?username=f&room=itzy

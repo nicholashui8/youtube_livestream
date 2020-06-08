@@ -17,6 +17,23 @@ let room = getParameterByName('room');
 //join room with username and room
 socket.emit('joinroom', {username, room});
 console.log(username, room);
+
+//ouputs all clients that are in the same room as new client
+socket.on('outputLiveUsers', ({users, room}) => {
+    for(let i = 0; i < users.length; i++){
+        //only prints out username if clients are in the same room
+        if(users[i].room === room){
+            outputLiveUsers(users[i].username);
+            console.log('Beep' + users[i].username);
+        }
+    }
+});
+//updates every client's 'live user' page that new user has joined
+socket.on('updateLiveUsers', (users) => {
+        //output only the new client
+        outputLiveUsers(users[users.length - 1].username);
+});
+
 /*--------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 Youtube API call
@@ -190,4 +207,11 @@ function outputMessage(message){
        ${message.text}
     </p>`;
     document.querySelector('.chat-messages').appendChild(div);             
+}
+
+function outputLiveUsers(name){
+    const div = document.createElement('div');
+    div.classList.add('a-user');
+    div.innerHTML = `<p> ${name}</p>`
+    document.querySelector('.live-users').appendChild(div);
 }
