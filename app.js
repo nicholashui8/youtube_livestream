@@ -60,15 +60,9 @@ io.on('connection', socket => {
          //output all live users for the new client
          socket.emit('outputLiveUsers', {users, room});
 
-        
-
-
-
-
     });
 
     socket.on('checkIfDup', (targetUsername) => {
-        console.log("Target: " + targetUsername);
         //looks through array to see if  username already exists
         let badName = users.some( el => {
             return el.username === targetUsername
