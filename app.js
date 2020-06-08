@@ -19,6 +19,7 @@ io.on('connection', socket => {
     console.log('new web socket connection');
 
     socket.on('disconnect', () => {
+        const user = getCurrentUser(socket.id);
         //since client has left, remove their username from array
         //we have the socketid of client that just left
         console.log('Has left: ' + socket.id);
@@ -26,13 +27,23 @@ io.on('connection', socket => {
         let userToRemove = users.findIndex((user) => {
             return user.id === socket.id;
         });
-        //remove that user from array of users
+        //remove that user from array of users, userToRemove isn't -1
+        //if it is -1, the id that just left wasnt in the array
+        //must be a ghost connection
         if(userToRemove !== -1){
-            return users.splice(userToRemove, 1);
-        }
-        
-        
+            //io.sockets.emit('deleteFromLive', );
+            //get room of the user we're about to remove
+            let room = users[userToRemove].room;
+            console.log('removing from: ' + room);
+            //remove user that just disconnected
+            users.splice(userToRemove, 1);
+            //update "live users" in room that client just disconnected from
+            io.sockets.in(user.room).emit('outputLiveUsers', {users, room});
 
+        }
+        console.log(users);
+       
+        
     });
 
 
@@ -40,8 +51,8 @@ io.on('connection', socket => {
 
     //listens for when user joins a room
     socket.on('joinroom', ({username, room}) => {
-        
-       
+        console.log(users);
+        console.log("join room has been activated");
         //pass user into "userJoin" to add user into array
         const user = userJoin(socket.id, username, room);
         //puts client into room that they selected
@@ -56,9 +67,10 @@ io.on('connection', socket => {
         }
          //when user joins room we want to update the live user section
          //update all other clients of the new client
-         socket.broadcast.to(user.room).emit('updateLiveUsers', users);
+         io.sockets.in(user.room).emit('outputLiveUsers', {users, room});
+        // socket.broadcast.to(user.room).emit('updateLiveUsers', users);
          //output all live users for the new client
-         socket.emit('outputLiveUsers', {users, room});
+        // socket.emit('outputLiveUsers', {users, room});
 
     });
 
