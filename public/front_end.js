@@ -43,9 +43,11 @@ Youtube API call
 */
 const group = {
     itzy: 'fE2h3lGlOsk, zndvqTc4P9I, pNfTK39k55U',
-    blackpink: '2S24-y0Ij3Y, 9pdj4iJD08s, dISNgvVpWlo',
-    twice: 'kOHB85vDuow, i0p1bmr0EmE, Fm5iP0S1z9w',
-    redvelvet: 'uR8Mrt1IpXg, J_CFBjAyPWE, 6uJf2IT2Zh8'
+    blackpink: '2S24-y0Ij3Y, 9pdj4iJD08s, dISNgvVpWlo, Amq-qlqbjYA',
+    twice: 'kOHB85vDuow, i0p1bmr0EmE, Fm5iP0S1z9w, mAKsZ26SabQ, ePpPVE-GGJw',
+    redvelvet: 'uR8Mrt1IpXg, J_CFBjAyPWE, 6uJf2IT2Zh8, IWJUPY-2EIM',
+    bts: '7C2z4GqqS5E'
+    // kTlv5_Bs8aw, XsX3ATc3FbA, hmE9f-TEutc'
 }
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
@@ -70,7 +72,7 @@ function onYouTubeIframeAPIReady() {
         controls: 1,
         disablekb: 0,
         rel: 0,
-        autoplay: 1,
+        autoplay: 0,
         modestbranding: 1,
         loop: 1,
         playlist: group[room]
@@ -237,3 +239,15 @@ socket.on('deleteFromLive', ({users, room}) => {
         }
     }
 });
+
+function stopRacism(){
+    console.log('stopRacism')
+    if(player.getCurrentTime() >= 156 && player.getCurrentTime() < 168){
+        player.seekTo(170, true);
+    }
+}
+if(room === 'bts'){
+setInterval(() => {
+    stopRacism()
+}, 1000);
+}

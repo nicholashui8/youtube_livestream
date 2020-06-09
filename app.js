@@ -46,9 +46,6 @@ io.on('connection', socket => {
         
     });
 
-
-
-
     //listens for when user joins a room
     socket.on('joinroom', ({username, room}) => {
         console.log(users);
