@@ -6,7 +6,7 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
-        <div class="playerLive-container">
+        <div class="playerChat-container">
         <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
             <div class="player-container">
                 <div id="player"></div>
@@ -17,26 +17,28 @@
                     <button type="button" id="next-button"><i class="fas fa-forward"></i></button>
                     <button type="button" id="start-live-button">Join Live</button>
                 </div>
-            </div>  
-            <div class="live-user-container">
-                <h1>Live Users</h1>
-                <div class="live-users" id="change">
-
+            </div> 
+            
+            <div class="chat-container" id="chat-container-id">
+                <div class="chat-messages" id="chat-messages-id">
+                    
+                </div>
+                <div class="chat-box">
+                    <form class="resize-input" id="chat-form">
+                        <input id="message" type="text" placeholder="Enter Message" required autocomplete="off"/>
+                        <button id="send"><i class="fas fa-arrow-up"></i></button>
+                    </form>
                 </div>
             </div>
+            
         </div>
-        <div class="chat-container">
-            <div class="chat-messages">
-                
-            </div>
-            <div class="chat-box">
-                <form id="chat-form">
-                    <input id="message" type="text" placeholder="Enter Message" required autocomplete="off"/>
-                    <button id="send"><i class="fas fa-arrow-up"></i></button>
-                </form>
+        <div class="live-user-container">
+            <h1>Live Users</h1>
+            <div class="live-users" id="change">
+
             </div>
         </div>
-        <h2>As an ally of BLM, we have choosen to remove content to may perpetuate or offend people of color</h2>
+        
         <!--gives front_end.js access to socket.io library -->
         <script src="/socket.io/socket.io.js"></script> 
         <script src="front_end.js" defer></script>

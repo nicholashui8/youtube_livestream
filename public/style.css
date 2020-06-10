@@ -2,14 +2,16 @@
 body{
     margin: 0;
     padding: 0;
+   
 }
-.playerLive-container{
+.playerChat-container{
     display: flex;
     margin: 0;
     padding: 0;
     width: 100%;
     background-color: green;
     font-family:'Raleway', sans-serif;
+    overflow: hidden;
 }
 .player-container{
     text-align: center;
@@ -24,7 +26,7 @@ body{
 .player-controller{
     margin-top: 10px;
     margin-left: 50px;
-    margin-right: 50px;
+    margin-right: 10px;
     margin-bottom: 50px;
 }
 button{
@@ -41,56 +43,89 @@ button:hover{
 }
 
 .live-user-container{
-    flex: 1;
+    
     background-color: red;
     text-align: center;
+    min-height: 500px;
+    font-family:'Raleway', sans-serif;
+
     
     
 }
 .chat-container {
+    flex: 1;
     font-family:'Raleway', sans-serif;
     max-width: 1100px;
-    min-width: 200px;
-    margin: 50px;
+    min-width: 300px;
+    margin: 5px;
     overflow: hidden;
-    background-color: magenta;
+    background-color: yellow;
     position: relative;
+    
 }
 .chat-messages {
-	padding: 30px;
-	height: 500px;
+    padding: 20px;
+   background-color: purple;
     overflow-y: scroll;
-    background-color: lightblue;
+    
 }
 
 /*div for each individual message*/
 .chat-messages .message{
-    padding: 5px;
-    padding-top: 2px;
-    padding-bottom: 2px;
-	margin-bottom: 15px;
+    padding-left: 5px;
+    padding-top: 0.5px;
+    padding-bottom: 0.5px;
+    margin-bottom: 2px;
+    line-height: 1px;
     background-color: var(--light-color);
-    background-color: white;
+    background-color: red;
 	border-radius: 5px;
 }
 
 
 .chat-box{
-    padding: 20px 30px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    padding: 1% 2%;
+    background-color: greenyellow;
 }
 
 .chat-box form{
+    
     display: flex;
     width: 100%;
 }
 
 .chat-box input[type='text'] {
+    margin-top: 1.5%;
+    margin-bottom: 1%;
+    margin-left: 2%;
+    margin-right: 2%;
 	font-size: 16px;
-	padding: 5px;
-	height: 40px;
+	padding: 2px;
+	height: 10%;
     flex: 1;
+    background-color: white;
     
 }
+@media all and (max-width: 1000px){
+    
+    .player-container{
+        background-color: green;
+    }
+
+}
+@media all and (max-width: 800px){
+    
+    .player-container{
+        background-color: green;
+    }
+    
+    .chat-container {
+        display: none;
+    }
+}
+
 
 .login-container{
     margin-top: 100px;

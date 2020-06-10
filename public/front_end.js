@@ -14,7 +14,7 @@ let username = getParameterByName('username');
 let room = getParameterByName('room');
 
 
-//join room with username and room
+//listens for when user joins, join room with username and room
 socket.emit('joinroom', {username, room});
 console.log(username, room);
 
@@ -29,14 +29,7 @@ socket.on('outputLiveUsers', ({users, room}) => {
         }
     }
 });
-/*prob dont need th
-//something is wrong with this
-//updates every client's 'live user' page that new user has joined
-socket.on('updateLiveUsers', (users) => {
-        //output only the new client
-        outputLiveUsers(users[users.length - 1].username);
-});
-*/
+
 /*--------------------------------------------------------------------------------------
 --------------------------------------------------------------------------------------
 Youtube API call
@@ -44,10 +37,11 @@ Youtube API call
 const group = {
     itzy: 'fE2h3lGlOsk, zndvqTc4P9I, pNfTK39k55U',
     blackpink: '2S24-y0Ij3Y, 9pdj4iJD08s, dISNgvVpWlo, Amq-qlqbjYA',
-    twice: 'kOHB85vDuow, i0p1bmr0EmE, Fm5iP0S1z9w, mAKsZ26SabQ, ePpPVE-GGJw',
+    twice: 'mH0_XpSHkZo, kOHB85vDuow, i0p1bmr0EmE, Fm5iP0S1z9w, mAKsZ26SabQ, ePpPVE-GGJw',
     redvelvet: 'uR8Mrt1IpXg, J_CFBjAyPWE, 6uJf2IT2Zh8, IWJUPY-2EIM',
-    bts: '7C2z4GqqS5E'
-    // kTlv5_Bs8aw, XsX3ATc3FbA, hmE9f-TEutc'
+    bts: '7C2z4GqqS5E, kTlv5_Bs8aw, XsX3ATc3FbA, hmE9f-TEutc',
+    niki: 'ErmgY5GX_wI, PjPy9XielsA, 5e6F1VA6WG4, mxyucLe9YE4, PjPy9XielsA'
+    
 }
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
@@ -63,9 +57,25 @@ var player;
 //this function executes by itself. not sure why
 function onYouTubeIframeAPIReady() {
   console.log('jh');
+  let w = window.innerWidth;
+  let h = window.innerHeight;
+  let setWidth;
+  if(w >= 1360){
+      setWidth = 1200;
+  }
+  //when width is less than 1360 make youtube player smaller
+  if(w < 1360 && w >=1000){
+      setWidth = 900;
+  }
+  if(w < 1000 && w >=750){     
+      setWidth = 750;
+  }
+  if(w < 750){
+      setWidth = 500;
+  }
   player = new YT.Player('player', {
-    height: '390',
-    width: '640',
+    height: '650',
+    width: setWidth,
     //videoId: '2S24-y0Ij3Y',
     //video settings
     playerVars: {
@@ -240,14 +250,39 @@ socket.on('deleteFromLive', ({users, room}) => {
     }
 });
 
-function stopRacism(){
-    console.log('stopRacism')
-    if(player.getCurrentTime() >= 156 && player.getCurrentTime() < 168){
-        player.seekTo(170, true);
+let currentWidth;
+let currentHeight;
+//Resizes the youtube player and chat based on user's window size
+window.addEventListener('resize', function(event){
+    setPlayerSize();
+});
+let h = window.innerHeight;
+document.getElementById("chat-messages-id").style.height = (h - 120) + "px";
+function setPlayerSize(){
+    let w = window.innerWidth;
+    let h = window.innerHeight;
+    console.log('Width: ' + w);
+    console.log('Height: ' + h);
+    
+    console.log('Current width' + currentWidth);
+    if(w >= 1360){
+        player.setSize(1050, 800);
+        currentWidth = 1050;
     }
-}
-if(room === 'bts'){
-setInterval(() => {
-    stopRacism()
-}, 1000);
+    //when width is less than 1360 make youtube player smaller
+    if(w < 1360 && w >=1000){
+        player.setSize(700, 500);
+        currentWidth = 700;
+    }
+    if(w < 1000 && w >=750){
+        player.setSize(500, 350);
+        currentWidth = 500;
+    }
+    if(w < 750){
+        player.setSize(500, 300);
+        currentWidth = 500;
+    }
+    let newHeight = h - 120;
+    document.getElementById("chat-messages-id").style.height = newHeight + "px";
+   
 }

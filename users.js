@@ -1,3 +1,4 @@
+//stores all current users
 const users = [];
 
 function userJoin(id, username, room){
