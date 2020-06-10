@@ -9,6 +9,26 @@ body{
     height: 125px;
     background-color: black;
 }
+.current-info-container{
+    font-family:'Raleway', sans-serif;
+    text-align: center;
+    width: 5%;
+    background-color: black;
+    height: 30;
+    padding-top: 20px;
+    padding-right: 20px;
+    float: right;
+}
+#current-user{
+    color:white;
+    margin-right: 30%;
+    margin: 0;
+}
+#current-room{
+    color:white;
+    margin-right: 30%;
+    margin: 0;
+}
 .playerChat-container{
     display: flex;
     margin: 0;
@@ -137,6 +157,7 @@ button:hover{
     border-style: solid;
     border-width: 1px;
     border-radius: 20px;
+    outline: none;
 }
 
 @media all and (max-width: 925px){

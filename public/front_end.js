@@ -17,6 +17,10 @@ let room = getParameterByName('room');
 //listens for when user joins, join room with username and room
 socket.emit('joinroom', {username, room});
 console.log(username, room);
+//set info on top right of screen
+document.getElementById("current-user").textContent = username;
+document.getElementById("current-room").textContent = room;
+
 
 //ouputs all clients that are in the same room as new client
 socket.on('outputLiveUsers', ({users, room}) => {
@@ -272,11 +276,11 @@ function setPlayerSize(){
     let currentHeight = h - 300;
     console.log('Current width' + currentWidth);
     if(w > 1600){
-        player.setSize(1500, currentHeight);
+        player.setSize(1250, currentHeight);
     }
     
     if(w >= 1350 && w <= 1600){
-        player.setSize(1100, currentHeight);
+        player.setSize(1000, currentHeight);
     }
     //when width is less than 1360 make youtube player smaller
     if(w < 1350 && w >=1000){
@@ -289,6 +293,6 @@ function setPlayerSize(){
         player.setSize(600, currentHeight);
     }
     if(w < 400){
-        player.setSize(450, currentHeight);
+        player.setSize(300, currentHeight);
     }
 }
