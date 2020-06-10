@@ -4,31 +4,48 @@ body{
     padding: 0;
    
 }
+.nav{
+    width: 100%;
+    height: 125px;
+    background-color: black;
+}
 .playerChat-container{
     display: flex;
     margin: 0;
     padding: 0;
     width: 100%;
-    background-color: green;
     font-family:'Raleway', sans-serif;
     overflow: hidden;
 }
+
 .player-container{
     text-align: center;
-    flex: 1.4;
-    background-color: blue;
+    flex: 2;
+    background-color: white;
+    margin-bottom: 0;
+    width: 70%;
+    border-style: solid;
+    border-top: none;
+    border-right: none;
+    border-width: 1px;
 }
+
 #player{
-    padding-top: 5%;
     overflow: hidden;
 }
 
 .player-controller{
-    margin-top: 10px;
+    margin-top: 30px;
     margin-left: 50px;
     margin-right: 10px;
     margin-bottom: 50px;
 }
+#num-live-viewers{
+    color: red;
+    font-size: 20px;
+    margin-left: 20px;
+}
+
 button{
     font-family:'Raleway', sans-serif;
     padding: 10px;
@@ -37,35 +54,46 @@ button{
     border: none;
     border-radius: 50px;
 }
+
 button:hover{
     transform: scale(1.11);
     color: lightslategray;
 }
 
 .live-user-container{
-    
-    background-color: red;
+    width: 30%;
+    margin-left: 2px;
     text-align: center;
-    min-height: 500px;
+    height: 400px;
     font-family:'Raleway', sans-serif;
+    margin-top: 0;
+    border-style: solid;
+    border-width: 1px;
+    border-top: none;
+    border-bottom: none;
+    overflow-y: scroll;
+}
 
-    
+.chat-container {
+    font-family:'Raleway', sans-serif;
+    width: 350px;
+    margin: 0px;
+    overflow: hidden;
+    background-color: white;
+    position: relative;
+    flex-shrink: 0;
+    border-style: solid;
+    border-width: 1px;
+    border-top: none;
+    border-bottom: none;  
     
 }
-.chat-container {
-    flex: 1;
-    font-family:'Raleway', sans-serif;
-    max-width: 1100px;
-    min-width: 300px;
-    margin: 5px;
-    overflow: hidden;
-    background-color: yellow;
-    position: relative;
-    
+.chat-container h2 {
+    text-align: center;
 }
 .chat-messages {
     padding: 20px;
-   background-color: purple;
+    background-color: white;
     overflow-y: scroll;
     
 }
@@ -78,26 +106,27 @@ button:hover{
     margin-bottom: 2px;
     line-height: 1px;
     background-color: var(--light-color);
-    background-color: red;
+    background-color: rgb(240, 240, 240);
 	border-radius: 5px;
 }
 
 
 .chat-box{
+    border-style: solid;
+    border-width: 1px;
+    border-left: none;
+    border-right: none;
     margin-top: 1%;
-    margin-bottom: 1%;
     padding: 1% 2%;
-    background-color: greenyellow;
 }
 
 .chat-box form{
-    
     display: flex;
     width: 100%;
 }
 
 .chat-box input[type='text'] {
-    margin-top: 1.5%;
+    margin-top: 3.5%;
     margin-bottom: 1%;
     margin-left: 2%;
     margin-right: 2%;
@@ -105,20 +134,15 @@ button:hover{
 	padding: 2px;
 	height: 10%;
     flex: 1;
-    background-color: white;
-    
+    border-style: solid;
+    border-width: 1px;
+    border-radius: 20px;
 }
-@media all and (max-width: 1000px){
-    
-    .player-container{
-        background-color: green;
-    }
 
-}
-@media all and (max-width: 800px){
+@media all and (max-width: 925px){
     
     .player-container{
-        background-color: green;
+        background-color: white;
     }
     
     .chat-container {
@@ -162,4 +186,10 @@ button:hover{
 .join-room-btn-container{
     width: 40%;
     margin-left: 35%;
+}
+
+.footer{
+    height: 125px;
+    width: 100%;
+    background-color: black;
 }

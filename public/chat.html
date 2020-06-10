@@ -6,20 +6,28 @@
         <link rel="stylesheet" href="style.css">
     </head>
     <body>
+        <div class="nav">
+            
+        </div>
         <div class="playerChat-container">
         <!-- 1. The <iframe> (and video player) will replace this <div> tag. -->
             <div class="player-container">
-                <div id="player"></div>
+                <div class="player-wrapper">
+                    <div id="player"></div>
+                </div>
                 <div class="player-controller">
                     <button type="button" id="previous-button"><i class="fas fa-backward"></i></button>
                     <button type="button" id="play-button"><i class="fas fa-play"></i></button>
                     <button type="button" id="pause-button"><i class="fas fa-pause"></i></button>
                     <button type="button" id="next-button"><i class="fas fa-forward"></i></button>
                     <button type="button" id="start-live-button">Join Live</button>
+                    <label id = "num-live-viewers"> 0 </label>
+                    <i class="fas fa-user" style="color: red;"></i>
                 </div>
             </div> 
             
             <div class="chat-container" id="chat-container-id">
+                <h2>Stream Chat</h2>
                 <div class="chat-messages" id="chat-messages-id">
                     
                 </div>
@@ -32,11 +40,15 @@
             </div>
             
         </div>
+
         <div class="live-user-container">
             <h1>Live Users</h1>
             <div class="live-users" id="change">
 
             </div>
+        </div>
+        <div class="footer">
+
         </div>
         
         <!--gives front_end.js access to socket.io library -->

@@ -21,13 +21,17 @@ console.log(username, room);
 //ouputs all clients that are in the same room as new client
 socket.on('outputLiveUsers', ({users, room}) => {
     deleteLiveUser();
+    let numOfViewers = 0;
     for(let i = 0; i < users.length; i++){
         //only prints out username if clients are in the same room
         if(users[i].room === room){
+            numOfViewers++;
             outputLiveUsers(users[i].username);
             console.log('Beep' + users[i].username);
         }
     }
+    //set viewer count
+    document.getElementById("num-live-viewers").textContent = numOfViewers;
 });
 
 /*--------------------------------------------------------------------------------------
@@ -255,34 +259,36 @@ let currentHeight;
 //Resizes the youtube player and chat based on user's window size
 window.addEventListener('resize', function(event){
     setPlayerSize();
+    let h = window.innerHeight;
+    document.getElementById("chat-messages-id").style.height = (h - 325) + "px";
 });
 let h = window.innerHeight;
-document.getElementById("chat-messages-id").style.height = (h - 120) + "px";
+document.getElementById("chat-messages-id").style.height = (h - 325) + "px";
 function setPlayerSize(){
     let w = window.innerWidth;
     let h = window.innerHeight;
     console.log('Width: ' + w);
     console.log('Height: ' + h);
-    
+    let currentHeight = h - 300;
     console.log('Current width' + currentWidth);
-    if(w >= 1360){
-        player.setSize(1050, 800);
-        currentWidth = 1050;
+    if(w > 1600){
+        player.setSize(1500, currentHeight);
+    }
+    
+    if(w >= 1350 && w <= 1600){
+        player.setSize(1100, currentHeight);
     }
     //when width is less than 1360 make youtube player smaller
-    if(w < 1360 && w >=1000){
-        player.setSize(700, 500);
-        currentWidth = 700;
+    if(w < 1350 && w >=1000){
+        player.setSize(800, currentHeight);
     }
     if(w < 1000 && w >=750){
-        player.setSize(500, 350);
-        currentWidth = 500;
+        player.setSize(650, currentHeight);
     }
-    if(w < 750){
-        player.setSize(500, 300);
-        currentWidth = 500;
+    if(w < 750 && w >=400){
+        player.setSize(600, currentHeight);
     }
-    let newHeight = h - 120;
-    document.getElementById("chat-messages-id").style.height = newHeight + "px";
-   
+    if(w < 400){
+        player.setSize(450, currentHeight);
+    }
 }
