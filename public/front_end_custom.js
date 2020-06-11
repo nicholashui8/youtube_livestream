@@ -16,6 +16,7 @@ let room = getParameterByName('room');
 
 //tells user that a new user is joining, gives server username and room name
 socket.emit('joinroom', {username, room});
+
 console.log(username, room);
 //set info on top right of screen
 document.getElementById("current-user").textContent = username;
@@ -42,15 +43,7 @@ socket.on('outputLiveUsers', ({users, room}) => {
 --------------------------------------------------------------------------------------
 Youtube API call
 */
-const group = {
-    itzy: 'fE2h3lGlOsk, zndvqTc4P9I, pNfTK39k55U',
-    blackpink: '2S24-y0Ij3Y, 9pdj4iJD08s, dISNgvVpWlo, Amq-qlqbjYA',
-    twice: 'mH0_XpSHkZo, kOHB85vDuow, i0p1bmr0EmE, Fm5iP0S1z9w, mAKsZ26SabQ, ePpPVE-GGJw',
-    redvelvet: 'uR8Mrt1IpXg, J_CFBjAyPWE, 6uJf2IT2Zh8, IWJUPY-2EIM',
-    bts: '7C2z4GqqS5E, kTlv5_Bs8aw, XsX3ATc3FbA, hmE9f-TEutc',
-    niki: 'ErmgY5GX_wI, PjPy9XielsA, 5e6F1VA6WG4, mxyucLe9YE4, PjPy9XielsA'
-    
-}
+
 // 2. This code loads the IFrame Player API code asynchronously.
 var tag = document.createElement('script');
 
@@ -84,7 +77,7 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '650',
     width: setWidth,
-    //videoId: '2S24-y0Ij3Y',
+    videoId: '',
     //video settings
     playerVars: {
         controls: 1,
@@ -93,7 +86,6 @@ function onYouTubeIframeAPIReady() {
         autoplay: 0,
         modestbranding: 1,
         loop: 1,
-        playlist: group[room]
     },
     events: {
       'onReady': onPlayerReady,
@@ -148,26 +140,25 @@ document.getElementById("previous-button").addEventListener("click", () => {
 
 //syncs clients videos with each other
 document.getElementById("start-live-button").addEventListener("click", () => {
+    console.log('Start live has been clicked');
     //1 Ask server for video
-    socket.emit('askForVid',);
+    socket.emit('askForVidID',);
     //1.5 Ask server for time
     let currentTime = -1;
     socket.emit('askForTime', currentTime);
     
     
-    socket.on('recieveIndex', index => {
-        console.log('Index recieved from server');
+    socket.on('recieveVidID', ID => {
+        console.log('ID recieved from server: ' + ID);
         //2.Recieve Time from server
         socket.on('recieveTime', time => {
+            
             console.log('Time recieved from server');
             time += 1.5;
             console.log('Time to sync with:' + time);
-            
-            player.playVideoAt(index);
-            
-
+            player.loadVideoById(ID, time);
             //play video at the time we recieved
-            player.seekTo(time, true);
+            //player.seekTo(time, false);
         });  
     });
 });
@@ -175,7 +166,10 @@ socket.on('getTime', currentTime => {
     console.log('Sending: ' + player.getCurrentTime());
     socket.emit('heresTheTime',player.getCurrentTime());
 });
-//get the id of the current video
+
+
+
+//get the index of the current video
 socket.on('getVidIndex', currentIndex => {
     let index = player.getPlaylistIndex();
 
@@ -183,6 +177,17 @@ socket.on('getVidIndex', currentIndex => {
     socket.emit('heresTheIndex',index);
     
 });
+
+socket.on('getVidID', currentID => {
+    let ID = videoID;
+
+    console.log('Sending ID: ' + ID);
+    socket.emit('heresTheID', ID);
+    
+});
+
+
+
 socket.on('playVid', () => {
     player.playVideo(); 
 });
@@ -302,3 +307,19 @@ function setPlayerSize(){
         player.setSize(300, currentHeight);
     }
 }
+let videoID;
+document.getElementById("load-url").addEventListener("click", () => {
+    console.log('play button has been clicked');
+    let url = document.getElementById("link").value;
+    console.log(url);
+    url.indexOf('v');
+    videoID = url.substr( url.indexOf('v')+ 2, 11);
+    console.log(videoID);
+    player.loadVideoById(videoID , 0.1);
+    socket.emit('join-live!',);
+    
+});
+socket.on('join-live!', () => {
+    const startButton = document.getElementById('start-live-button');
+    startButton.click();
+});

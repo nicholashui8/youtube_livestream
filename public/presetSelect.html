@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="https://kit.fontawesome.com/bcc2a30727.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="style.css">
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stream!</title>
+</head>
+<body>
+    <div class="login-container">
+        <div class="username-container">
+            <div class="username-label">
+                <label for="username">Username</label>
+            </div>
+            <div class="enter-info">
+                <input
+                type="text"
+                name="username"
+                id="username"
+                placeholder="Enter username..."
+                required
+                />
+            </div>
+        </div>
+        <div class="room-container">
+            <div class="room-label">
+                <label for="room">Room</label>
+            </div>
+            <div class="enter-info">
+            
+                    <select name="room" id="room">
+                        <option value="itzy">Itzy</option>
+                        <option value="blackpink">Blackpink</option>
+                        <option value="twice">Twice</option>
+                        <option value="redvelvet">Red Velvet</option>
+                        <option value="bts">BTS</option>
+                        <option value="niki">Niki</option>
+
+                    </select>
+            </div>
+        </div>
+        <div class="join-room-btn-container">
+         <button type="submit" id="join-room-btn" class="btn">Join Room</button>
+        </div>
+        <div class="not-available-container">
+            <h2 id="username-taken">This username has been taken!</h2>
+        </div>
+    </div>
+    <!--gives front_end.js access to socket.io library -->
+    <script src="/socket.io/socket.io.js"></script> 
+    <script src="authenticate.js"></script>
+    
+</body>
+</html>

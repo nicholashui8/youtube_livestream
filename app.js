@@ -3,7 +3,7 @@ const http = require('http');
 const socketio = require('socket.io');
 //get module for formatting message
 const formatMessage = require('./messages');
-const {userJoin, getCurrentUser, users} = require('./users');
+const {userJoin, getCurrentUser, createRoom, users, rooms} = require('./users');
 
 const app = express();
 
@@ -52,15 +52,16 @@ io.on('connection', socket => {
         console.log("join room has been activated");
         //pass user into "userJoin" to add user into array
         const user = userJoin(socket.id, username, room);
+        createRoom(user.room);
         //puts client into room that they selected
         socket.join(user.room);
+        console.log('Joining: ' + user.room);
         console.log('Has joined: ' + socket.id);
         //tells all clients in room that a new user has joined
         socket.broadcast.to(user.room).emit('message', formatMessage(user.username, user.username + ' has joined the chat'));
         console.log(user.username + ' has joined ' + user.room);
-        console.log('Length of array: ' + users.length);
-        for(let i = 0; i < users.length; i++){
-            console.log('UserL ' + i + ' ' + users[i].username);
+        for(let i = 0; i < rooms.length; i++){
+            console.log('Room ' + i + ': ' + rooms[i]);
         }
          //when user joins room we want to update the live user section
          //update all other clients of the new client
@@ -74,12 +75,22 @@ io.on('connection', socket => {
     socket.on('checkIfDup', (targetUsername) => {
         //looks through array to see if  username already exists
         let badName = users.some( el => {
-            return el.username === targetUsername
+            return el.username === targetUsername;
         });
-        
-        socket.emit('checkIfDup', badName);
+        console.log(badName);
+        console.log('CHECK');
+        socket.emit('returnIfDup', badName);
     });
-    //here!
+    //for users creating custom rooms. checks if room name already exists
+    socket.on('checkIfRoomIsDup', (targetRoomname) => {
+        console.log('Checking this room: ' + targetRoomname);
+        let badRoomname = rooms.some( el => {
+            return el === targetRoomname;
+        });
+        console.log('Is there more than 1 room of this? ' + badRoomname);
+        socket.emit('checkIfRoomIsDup', badRoomname);
+    });
+    
     //listening for when new client requests to join livestream
     socket.on('askForTime', (currentTime) => {
         //ask an old client for the time
@@ -93,6 +104,20 @@ io.on('connection', socket => {
         const user = getCurrentUser(socket.id);
         socket.broadcast.to(user.room).emit('getVidIndex',)
         //socket.broadcast.emit('getVidIndex', currentIndex);
+    });
+    socket.on('join-live!', () => {
+        const user = getCurrentUser(socket.id);
+        socket.broadcast.to(user.room).emit('join-live!',);
+    });
+
+    socket.on('askForVidID', () => {
+        const user = getCurrentUser(socket.id);
+        socket.broadcast.to(user.room).emit('getVidID',)
+    });
+
+    socket.on('heresTheID', (ID) => {
+        const user = getCurrentUser(socket.id);
+        socket.to(user.room).emit('recieveVidID', ID);
     });
    
    //listen for when old client sends the time

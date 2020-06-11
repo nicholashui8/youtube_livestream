@@ -30,6 +30,7 @@
                 </div>
             </div> 
             
+            
             <div class="chat-container" id="chat-container-id">
                 <h2>Stream Chat</h2>
                 <div class="chat-messages" id="chat-messages-id">
@@ -44,10 +45,21 @@
             </div>
             
         </div>
-
-        <div class="live-user-container">
-            <h1>Live Users</h1>
-            <div class="live-users" id="change">
+        <div class="live-user-custom-link-container">
+            <div class="live-user-container">
+                <h1>Live Users</h1>
+                <div class="live-users" id="change">
+                </div>
+            </div>
+            <div class="your-link-container">
+                <input
+                    type="text"
+                    name="username"
+                    id="link"
+                    placeholder="Enter your Youtube link!"
+                    required
+                />
+                <button id="load-url">Play! </button>
 
             </div>
         </div>
@@ -57,6 +69,6 @@
         
         <!--gives front_end.js access to socket.io library -->
         <script src="/socket.io/socket.io.js"></script> 
-        <script src="front_end.js" defer></script>
+        <script src="front_end_custom.js" defer></script>
   </body>
 </html>
