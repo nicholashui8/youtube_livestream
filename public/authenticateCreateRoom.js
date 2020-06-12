@@ -4,8 +4,10 @@ document.getElementById("create-room-btn").addEventListener("click", () => {
     let name = document.getElementById('username').value;
     let targetUsername = document.getElementById('username').value;
     let targetRoom = document.getElementById('room').value;
-    console.log('Button has been clicked!:  ' + targetUsername + ' ' + targetRoom);
-    
+    let url = document.getElementById("link").value;
+    console.log(url);
+    url.indexOf('v');
+    videoID = url.substr( url.indexOf('v')+ 2, 11);    
     
     //1. send new username to server to check if it is duplicate
     socket.emit('checkIfDup', targetUsername);
@@ -18,7 +20,7 @@ document.getElementById("create-room-btn").addEventListener("click", () => {
             socket.on('checkIfRoomIsDup', (badRoomName) => {
                 if(badRoomName === false){
                     console.log('Username and roomname are good!');
-                    window.location.href = "chat_custom.html" + "?username=" + name + "&room=" + targetRoom;
+                    window.location.href = "chat_custom.html" + "?username=" + name + "&room=" + targetRoom + "&id=" + videoID;
                 }
                 else{
                     document.getElementById("room").value = '';

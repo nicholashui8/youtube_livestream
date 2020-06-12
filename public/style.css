@@ -2,7 +2,6 @@
 body{
     margin: 0;
     padding: 0;
-   
 }
 .nav{
     width: 100%;
@@ -175,7 +174,6 @@ button:hover{
 
 .login-container{
     margin-top: 100px;
-    background-color: white;
     text-align: center;
     width: 100%;
     font-family:'Raleway', sans-serif;
@@ -184,19 +182,29 @@ button:hover{
 .username-container{
     margin-left: 35%;
     width: 40%;
-   
 }
+
 .enter-info{
     display: inline-block;
     padding-left: 3%;
     left: 30%;
 }
-.username-label{
-    font-size: 20px;
+
+.enter-info-drop-down{
     display: inline-block;
-    margin-right: 10px;
+    padding-left: 16%;
+}
+
+.label-container{
+    font-size: 20px;
+    width: 225px;
+    height:90px;
+    display: inline-block;
+    margin-right: 1px;
 }
 .room-container{
+    margin-top: 10px;
+    margin-bottom: 10px;
     margin-left: 35%;
     width: 40%;
 }
@@ -235,4 +243,8 @@ button:hover{
     margin-top: 10%;
     width: 55%;
     height: 7%;
+}
+.selection-container{
+    text-align: center;
+    margin-top: 150px;
 }

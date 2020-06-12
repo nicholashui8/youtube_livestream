@@ -12,7 +12,7 @@ function getParameterByName(name, url) {
 }
 let username = getParameterByName('username');
 let room = getParameterByName('room');
-
+let originalVideoID = getParameterByName('id');
 
 //tells user that a new user is joining, gives server username and room name
 socket.emit('joinroom', {username, room});
@@ -77,7 +77,7 @@ function onYouTubeIframeAPIReady() {
   player = new YT.Player('player', {
     height: '650',
     width: setWidth,
-    videoId: '',
+    videoId: originalVideoID,
     //video settings
     playerVars: {
         controls: 1,
@@ -307,7 +307,8 @@ function setPlayerSize(){
         player.setSize(300, currentHeight);
     }
 }
-let videoID;
+//the video that will load is whatever video the creator of the room selects
+let videoID = originalVideoID;
 document.getElementById("load-url").addEventListener("click", () => {
     console.log('play button has been clicked');
     let url = document.getElementById("link").value;

@@ -40,6 +40,17 @@ io.on('connection', socket => {
             //update "live users" in room that client just disconnected from
             io.sockets.in(user.room).emit('outputLiveUsers', {users, room});
 
+            //We also need to delete rooms when they are empty. We can check if rooms are empty by seeing if anyone
+            //is in the room that the most recent user just disconnected from
+            let anyoneStillInRoom = users.includes(room);
+            //if no one is in the room, remove room from array of rooms
+            if(anyoneStillInRoom === false){
+                console.log('Room: ' + room + ' has been removed');
+                rooms.pop(room);
+            }
+
+
+
         }
         console.log(users);
        
