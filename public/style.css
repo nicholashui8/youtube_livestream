@@ -94,6 +94,7 @@ button:hover{
     overflow-y: scroll;
 }
 
+
 .chat-container {
     font-family:'Raleway', sans-serif;
     width: 350px;
@@ -115,21 +116,19 @@ button:hover{
     padding: 20px;
     background-color: white;
     overflow-y: scroll;
-    
-}
 
+}
 /*div for each individual message*/
 .chat-messages .message{
     padding-left: 5px;
-    padding-top: 0.5px;
-    padding-bottom: 0.5px;
-    margin-bottom: 2px;
+    padding-top: 0.01%;
+    padding-bottom: 0.01%;
+    margin-bottom: 3px;
     line-height: 1px;
     background-color: var(--light-color);
     background-color: rgb(240, 240, 240);
 	border-radius: 5px;
 }
-
 
 .chat-box{
     border-style: solid;
@@ -146,12 +145,12 @@ button:hover{
 }
 
 .chat-box input[type='text'] {
-    margin-top: 3.5%;
+    margin-top: 2%;
     margin-bottom: 1%;
     margin-left: 2%;
     margin-right: 2%;
 	font-size: 16px;
-	padding: 2px;
+	padding: 6px;
 	height: 10%;
     flex: 1;
     border-style: solid;
@@ -188,6 +187,15 @@ button:hover{
     display: inline-block;
     padding-left: 3%;
     left: 30%;
+   
+}
+
+.enter-info input{
+    border-style: solid;
+    border-radius: 4px;
+    border-width: 1px;
+    outline: none;
+    padding: 3px;
 }
 
 .enter-info-drop-down{
@@ -202,17 +210,20 @@ button:hover{
     display: inline-block;
     margin-right: 1px;
 }
+
 .room-container{
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin-top: 6px;
+    margin-bottom: 6px;
     margin-left: 35%;
     width: 40%;
 }
+
 .room-label{
     font-size: 20px;
     display: inline-block;
     margin-right: 60px;
 }
+
 .join-room-btn-container{
     width: 40%;
     margin-left: 35%;
@@ -227,24 +238,35 @@ button:hover{
 #username-taken{
     display: none;
 }
+
 #roomname-taken{
     display: none;
 }
+
 .live-user-custom-link-container{
-    width:50%;
+    width: 65%;
     display: flex;
-}  
+}
+
 .your-link-container{
     text-align: center;
     flex: 1;
-    width: 30%;
+    width: 200px;
 }
+
 .your-link-container input{
+    padding-left: 5px;
     margin-top: 10%;
-    width: 55%;
+    width: 75%;
     height: 7%;
+    outline: none;
 }
+
 .selection-container{
     text-align: center;
     margin-top: 150px;
+}
+
+.create-room{
+    margin: 15px;
 }
