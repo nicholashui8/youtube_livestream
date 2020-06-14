@@ -30,8 +30,6 @@ document.getElementById("join-room-btn").addEventListener("click", () => {
         else{
             document.getElementById("username").value = '';
             document.getElementById("username-taken").style.display = "block";
-            
-
         }
     });
     /*

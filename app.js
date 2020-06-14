@@ -48,13 +48,8 @@ io.on('connection', socket => {
                 console.log('Room: ' + room + ' has been removed');
                 rooms.pop(room);
             }
-
-
-
         }
-        console.log(users);
-       
-        
+        console.log(users); 
     });
 
     //listens for when user joins a room
@@ -74,12 +69,12 @@ io.on('connection', socket => {
         for(let i = 0; i < rooms.length; i++){
             console.log('Room ' + i + ': ' + rooms[i]);
         }
-         //when user joins room we want to update the live user section
-         //update all other clients of the new client
-         io.sockets.in(user.room).emit('outputLiveUsers', {users, room});
-        // socket.broadcast.to(user.room).emit('updateLiveUsers', users);
-         //output all live users for the new client
-        // socket.emit('outputLiveUsers', {users, room});
+        //when user joins room we want to update the live user section
+        //update all other clients of the new client
+        io.sockets.in(user.room).emit('outputLiveUsers', {users, room});
+        
+        //output all live users for the new client
+        
 
     });
 

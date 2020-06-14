@@ -292,14 +292,17 @@ function setPlayerSize(){
     if(w < 1350 && w >=1150){
         player.setSize(800, currentHeight);
     }
-    if( w< 1150 && w >=1000){
+    if( w< 1150 && w >=1050){
         player.setSize(700, currentHeight);
     }
-    if(w < 1000 && w >=750){
-        player.setSize(650, currentHeight);
+    if(w < 1050 && w >=950){
+        player.setSize(600, currentHeight);
+    }
+    if(w < 950 && w >=750){
+        player.setSize(575, currentHeight);
     }
     if(w < 750 && w >=600){
-        player.setSize(600, currentHeight);
+        player.setSize(525, currentHeight);
     }
     if(w < 600 && w >=400){
         player.setSize(450, currentHeight);
@@ -310,6 +313,7 @@ function setPlayerSize(){
 }
 //the video that will load is whatever video the creator of the room selects
 let videoID = originalVideoID;
+
 document.getElementById("load-url").addEventListener("click", () => {
     console.log('play button has been clicked');
     let url = document.getElementById("link").value;
@@ -321,7 +325,13 @@ document.getElementById("load-url").addEventListener("click", () => {
     socket.emit('join-live!',);
     
 });
+
 socket.on('join-live!', () => {
-    const startButton = document.getElementById('start-live-button');
+    let startButton = document.getElementById('start-live-button');
     startButton.click();
 });
+//clicks "start live " automatically when user joins room
+setTimeout(() => {
+    let startButton = document.getElementById('start-live-button');
+    startButton.click();
+}, 600);
