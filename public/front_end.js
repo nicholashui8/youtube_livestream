@@ -304,11 +304,11 @@ function setPlayerSize(){
     if(w < 400){
         player.setSize(300, currentHeight);
     }
-    
+
 }
 
 //clicks "start live " automatically when user joins room
 setTimeout(() => {
     let startButton = document.getElementById('start-live-button');
     startButton.click();
-}, 600);
+}, 800);

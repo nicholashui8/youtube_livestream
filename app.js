@@ -34,7 +34,6 @@ io.on('connection', socket => {
             //io.sockets.emit('deleteFromLive', );
             //get room of the user we're about to remove
             let room = users[userToRemove].room;
-            console.log('removing from: ' + room);
             //remove user that just disconnected
             users.splice(userToRemove, 1);
             //update "live users" in room that client just disconnected from
@@ -55,7 +54,6 @@ io.on('connection', socket => {
     //listens for when user joins a room
     socket.on('joinroom', ({username, room}) => {
         console.log(users);
-        console.log("join room has been activated");
         //pass user into "userJoin" to add user into array
         const user = userJoin(socket.id, username, room);
         createRoom(user.room);
@@ -89,11 +87,9 @@ io.on('connection', socket => {
     });
     //for users creating custom rooms. checks if room name already exists
     socket.on('checkIfRoomIsDup', (targetRoomname) => {
-        console.log('Checking this room: ' + targetRoomname);
         let badRoomname = rooms.some( el => {
             return el === targetRoomname;
         });
-        console.log('Is there more than 1 room of this? ' + badRoomname);
         socket.emit('checkIfRoomIsDup', badRoomname);
     });
     
@@ -129,18 +125,14 @@ io.on('connection', socket => {
    //listen for when old client sends the time
     socket.on('heresTheTime', (time) => {
         //send time back to new client
-        console.log('The time that we recived from old client ' + time);
        // socket.broadcast.emit('recieveTime', time);
-        console.log('Time has been sent back to client');
         const user = getCurrentUser(socket.id);
         socket.to(user.room).emit('recieveTime', time);
     });
     //listen for when client sends which video they are on
     socket.on('heresTheIndex', (index) => {
         //send index back to new client
-        console.log('The index that we recived from old client ' + index);
        // socket.broadcast.emit('recieveIndex', index);
-        console.log('Index has been sent back to client');
         const user = getCurrentUser(socket.id);
         socket.to(user.room).emit('recieveIndex', index);
     });
@@ -149,7 +141,6 @@ io.on('connection', socket => {
     socket.on('playVid', () => {
         //tells all other clients to play video
         const user = getCurrentUser(socket.id);
-        console.log('User info' + user);
         socket.broadcast.to(user.room).emit('playVid',)
         //socket.broadcast.emit('playVid', );
     });
@@ -175,9 +166,7 @@ io.on('connection', socket => {
 
     //listen for when for client sends a message
     socket.on('chatMessage', (msg) => {
-        console.log('Message recieved: ' + msg);
         const user = getCurrentUser(socket.id);
-        console.log('user room: ' + user.room);
         //send message to all clients in the same room
         io.to(user.room).emit('message', formatMessage(user.username, msg));
     });
