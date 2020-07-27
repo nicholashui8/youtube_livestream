@@ -59,13 +59,13 @@ io.on('connection', socket => {
         createRoom(user.room);
         //puts client into room that they selected
         socket.join(user.room);
-        console.log('Joining: ' + user.room);
-        console.log('Has joined: ' + socket.id);
+        console.log('User is joining: ' + user.room);
+        console.log('User joined: ' + socket.id);
         //tells all clients in room that a new user has joined
         socket.broadcast.to(user.room).emit('message', formatMessage(user.username, user.username + ' has joined the chat'));
         console.log(user.username + ' has joined ' + user.room);
         for(let i = 0; i < rooms.length; i++){
-            console.log('Room ' + i + ': ' + rooms[i]);
+            console.log('Name of room ' + i + ': ' + rooms[i]);
         }
         //when user joins room we want to update the live user section
         //update all other clients of the new client
@@ -114,6 +114,7 @@ io.on('connection', socket => {
 
     socket.on('askForVidID', () => {
         const user = getCurrentUser(socket.id);
+        console.log('This is the current user: ' + user.username);
         socket.broadcast.to(user.room).emit('getVidID',)
     });
 

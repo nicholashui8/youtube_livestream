@@ -138,6 +138,8 @@ document.getElementById("previous-button").addEventListener("click", () => {
 
 
 
+let videoID = originalVideoID;
+console.log(originalVideoID);
 
 //syncs clients videos with each other
 document.getElementById("start-live-button").addEventListener("click", () => {
@@ -178,11 +180,17 @@ socket.on('getVidIndex', currentIndex => {
     socket.emit('heresTheIndex',index);
     
 });
-
+//recieves request for youtube video ID
 socket.on('getVidID', currentID => {
-    let ID = videoID;
+    //parse the url for it's ID
+    console.log('Vid URL: ' + player.getVideoUrl());
+    let URL = player.getVideoUrl();
+    let pos = URL.indexOf('v=');
+    let ID  = URL.substr(pos + 2);
+    
+    console.log('Current video ID: ' + ID);
 
-    console.log('Sending ID: ' + ID);
+    //sends youtube video ID
     socket.emit('heresTheID', ID);
     
 });
@@ -277,10 +285,9 @@ document.getElementById("chat-messages-id").style.height = (h - 325) + "px";
 function setPlayerSize(){
     let w = window.innerWidth;
     let h = window.innerHeight;
-    console.log('Width: ' + w);
-    console.log('Height: ' + h);
+
     let currentHeight = h - 300;
-    console.log('Current width' + currentWidth);
+    
     if(w > 1600){
         player.setSize(1250, currentHeight);
     }
@@ -312,7 +319,7 @@ function setPlayerSize(){
     }
 }
 //the video that will load is whatever video the creator of the room selects
-let videoID = originalVideoID;
+
 
 document.getElementById("load-url").addEventListener("click", () => {
     console.log('play button has been clicked');
