@@ -32,7 +32,7 @@ socket.on('outputLiveUsers', ({users, room}) => {
         if(users[i].room === room){
             numOfViewers++;
             outputLiveUsers(users[i].username);
-            console.log('Beep' + users[i].username);
+            console.log(users[i].username);
         }
     }
     //set viewer count

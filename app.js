@@ -20,9 +20,17 @@ io.on('connection', socket => {
 
     socket.on('disconnect', () => {
         const user = getCurrentUser(socket.id);
+        //user wil be undefined if it is a ghost disconnecting
+        if(user == undefined){
+            console.log('Ghost socket ID ' + socket.id + ' has left');
+        }
+        else{
+            console.log(user.username + ' ' +  socket.id + ' has left');
+            socket.broadcast.to(user.room).emit('message', formatMessage(user.username, user.username + ' has left the chat'));    
+        }
+        
         //since client has left, remove their username from array
         //we have the socketid of client that just left
-        console.log('Has left: ' + socket.id);
         //get index of user that just left
         let userToRemove = users.findIndex((user) => {
             return user.id === socket.id;
@@ -48,7 +56,7 @@ io.on('connection', socket => {
                 rooms.pop(room);
             }
         }
-        console.log(users); 
+        //console.log(users); 
     });
 
     //listens for when user joins a room
@@ -60,7 +68,7 @@ io.on('connection', socket => {
         //puts client into room that they selected
         socket.join(user.room);
         console.log('User is joining: ' + user.room);
-        console.log('User joined: ' + socket.id);
+        console.log('User '+ user.username + ' ' + socket.id + ' has joined');
         //tells all clients in room that a new user has joined
         socket.broadcast.to(user.room).emit('message', formatMessage(user.username, user.username + ' has joined the chat'));
         console.log(user.username + ' has joined ' + user.room);
