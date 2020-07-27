@@ -21,10 +21,14 @@ io.on('connection', socket => {
     socket.on('disconnect', () => {
         const user = getCurrentUser(socket.id);
         //user wil be undefined if it is a ghost disconnecting
+        let userToRemove = -1;
         if(user == undefined){
             console.log('Ghost socket ID ' + socket.id + ' has left');
         }
         else{
+            userToRemove = users.findIndex((user) => {
+                return user.id === socket.id;
+            });
             console.log(user.username + ' ' +  socket.id + ' has left');
             socket.broadcast.to(user.room).emit('message', formatMessage(user.username, user.username + ' has left the chat'));    
         }
@@ -32,9 +36,7 @@ io.on('connection', socket => {
         //since client has left, remove their username from array
         //we have the socketid of client that just left
         //get index of user that just left
-        let userToRemove = users.findIndex((user) => {
-            return user.id === socket.id;
-        });
+        
         //remove that user from array of users, userToRemove isn't -1
         //if it is -1, the id that just left wasnt in the array
         //must be a ghost connection
@@ -67,8 +69,8 @@ io.on('connection', socket => {
         createRoom(user.room);
         //puts client into room that they selected
         socket.join(user.room);
-        console.log('User is joining: ' + user.room);
-        console.log('User '+ user.username + ' ' + socket.id + ' has joined');
+
+        console.log('User '+ user.username + ' ' + socket.id + ' has joined ' + user.room);
         //tells all clients in room that a new user has joined
         socket.broadcast.to(user.room).emit('message', formatMessage(user.username, user.username + ' has joined the chat'));
         console.log(user.username + ' has joined ' + user.room);
@@ -122,8 +124,11 @@ io.on('connection', socket => {
 
     socket.on('askForVidID', () => {
         const user = getCurrentUser(socket.id);
-        console.log('This is the current user: ' + user.username);
-        socket.broadcast.to(user.room).emit('getVidID',)
+        if(user !== undefined){
+            console.log('This is the current user: ' + user.username);
+            socket.broadcast.to(user.room).emit('getVidID',)
+        }
+        
     });
 
     socket.on('heresTheID', (ID) => {
